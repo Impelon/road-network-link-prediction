@@ -5,7 +5,9 @@ name: Build LaTeX document
 on:
   push:
     paths:
-    - "**.tex"
+      - "**.tex"
+    tags:
+      - "!*"
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
