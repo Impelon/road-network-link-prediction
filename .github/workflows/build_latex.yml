@@ -1,0 +1,56 @@
+name: Build LaTeX document
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    paths:
+    - "**.tex"
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      # - uses: docker://pandoc/latex:2.9
+      #   with:
+      #     args: -f latex -t gfm --standalone --bibliography "writing/references.bib" --number-sections --reference-links --reference-location=document --output writing/paper/paper.md writing/paper/paper.tex
+      # - name: Update README
+      #   run: |
+      #     echo "*This file has been automatically converted from [a LaTeX-sourcefile](paper.tex) using pandoc.*" > writing/paper/README.md
+      #     echo "References, figures, etc. are not necessarily correct. Please view the [PDF version](paper.pdf)." >> writing/paper/README.md
+      #     echo "" >> writing/paper/README.md
+      #     cat writing/paper/paper.md >> writing/paper/README.md
+      #     rm writing/paper/paper.md
+
+      - uses: xu-cheng/latex-action@v2
+        with:
+          # The LaTeX file(s) to be compiled
+          root_file: paper.tex
+          working_directory: writing/paper
+          args: -pdf -file-line-error -interaction=nonstopmode
+
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          # git add -f writing/paper/README.md
+          git add -f writing/paper/paper.pdf
+          git commit -m "Automatically build compiled versions of updated paper"
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
