@@ -1,0 +1,19 @@
+name: Attach PDF to release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Upload PDF to release
+        uses: svenstaro/upload-release-action@2.2.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: writing/paper/paper.pdf
+          tag: ${{ github.ref }}
