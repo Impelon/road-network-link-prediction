@@ -306,12 +306,12 @@ For some similarity functions this is not true, and instead the AUROC of their
 negated output was computed, such that a lower similarity score leads to a higher link probability.
 This has been highlighted in the referenced table with a \enquote{\n{}} before the abbreviation of the function.
 
-\begin{table}[tb]
+\begin{table*}[tb]
 \caption{AUROC for different similarity functions}
 \label{tab:similarity_auroc}
 \scriptsize
 \renewcommand{\arraystretch}{0.8}
-\resizebox{\columnwidth}{!}{%
+\resizebox{\linewidth}{!}{%
 \begin{tabularx}{\textwidth}{lXXXXXXXXXXXX}
 \toprule
 &CN        &JC        &AA        &\n{}min   &\n{}max   &\n{}xdist
@@ -349,7 +349,7 @@ This has been highlighted in the referenced table with a \enquote{\n{}} before t
 \bottomrule
 \end{tabularx}
 }
-\end{table}
+\end{table*}
 
 The random forest classifiers have been trained on one complete dataset
 and are being evaluated on the dataset they have not trained on.
