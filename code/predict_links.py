@@ -239,28 +239,3 @@ if __name__ == "__main__":
             radius = arguments[2]
         latitude, longitude = ox.geocode(arguments[1])
     predict_links(arguments[0], latitude, longitude, radius=radius)
-
-# # create subgraph for training
-# data = util.load_json_from_dgraph(latitude - 0.01, longitude - 0.01, 2000)
-# subgraph = util.reconstruct_network_from_dgraph_json(data)
-# subgraph = util.simplify_network(subgraph)
-# fig, ax = ox.plot_graph(subgraph, edge_linewidth=2)
-# fig.savefig("training_subgraph_forest.pdf", bbox_inches="tight", pad_inches=0)
-# subgraph = util.to_simple_edge_network(subgraph).to_undirected(reciprocal=False)
-# training_negative_edges = list(nx.complement(subgraph).edges())
-# training_edges = list(subgraph.edges()) + training_negative_edges
-#
-# start_time = time.time()
-# features, labels = gather_features_and_labels(subgraph, training_edges, similarity_scores_only=True)
-# classifier_small.fit(features, labels)
-# print(classifier_small.feature_importances_)
-# data = nx.complement(training_network).edges()
-# features, labels = gather_features_and_labels(training_network, data, similarity_scores_only=True)
-# labels = [test_network.has_edge(*edge) for edge in data]
-# scores = classifier_small.predict_proba(features)
-# scores = list(map(lambda x: float(x[1]), scores))
-# predictions = [(*edge, score) for edge, score in zip(data, scores)]
-# end_time = time.time()
-# duration = end_time - start_time
-# with open(os.path.join(dataset_folder, "forest_classifier_similarity_scores_only.json"), "w") as file:
-#     json.dump({"predictions": predictions, "scores": list(scores), "labels": list(labels), "duration": duration}, file)
