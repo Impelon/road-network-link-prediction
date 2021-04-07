@@ -164,7 +164,7 @@ used in the experiments are elaborated upon.
 
 This paper models a road as a connection between two different nodes.
 A road network can therefore be directly modeled as an undirected graph \(G = (V, E)\) with
-\(E \subseteq \{\{x, y\} \mid x \in V \wedge y \in V \wedge x \neq y\}\) defined as the set of roads (edges) in the network
+\(E \subseteq \{\{x, y\} \mid x, y \in V \wedge x \neq y\}\) defined as the set of roads (edges) in the network
 and \(V\) being their endpoints (nodes).
 Let \(\deg(x) = |\{\{x, y\} \mid y \in V\}|\) for any node \(x \in V\) be the degree of said node,
 which can be intuitively understood as the number of roads connected to it.
@@ -253,24 +253,25 @@ In contrast to other applications for link prediction, road networks include spa
 that will also be used for assigning similarity scores.
 
 Let \(\Gamma(x)\) be the set of neighbors of a node \(x\) in a graph.
-Let \(\{x,y\}\) be any edge in a graph.
+(One has \(\Gamma(x) = \{y \mid \{x, y\} \in E\}\) if \(E\) is the set of all edges in a graph.)
+Let \(x, y\) be any two nodes in a graph.
 \begin{description}
-\item[common neighbors (CN)] the number of neighbors the two nodes of the edge share;
+\item[common neighbors (CN)] the number of neighbors the two nodes share;
       \(|\Gamma(x) \cap \Gamma(y)|\)
-\item[jaccard coefficient (JC)] a normalized coefficient denoting how many neighbors the two nodes of the edge share;\\
+\item[jaccard coefficient (JC)] a normalized coefficient denoting how many neighbors the two nodes share;\\
       \(\frac{|\Gamma(x) \cap \Gamma(y)|}{|\Gamma(x) \cup \Gamma(y)|}\)
-\item[adamic adar index (AA)] a coefficient denoting how many neighbors the two nodes of the edge share with diminishing returns;
+\item[adamic adar index (AA)] a coefficient denoting how many neighbors the two nodes share with diminishing returns;
       \(\sum_{z \in \Gamma(x) \cap \Gamma(y)}\frac{1}{\log(\Gamma(z))}\)
-\item[min. neighbors (min)] the number of neighbors of the edge's node that has less neighbors\endnotemark\addtocounter{endnote}{-1};
+\item[min. neighbors (min)] the number of neighbors of the node that has less neighbors\endnotemark;
       \(\min\{|\Gamma(x)|,|\Gamma(y)|\}\)
-\item[max. neighbors (max)] the number of neighbors of the edge's node that has more neighbors\endnotemark;
+\item[max. neighbors (max)] the number of neighbors of the node that has more neighbors\addtocounter{endnote}{-1}\endnotemark;
       \(\max\{|\Gamma(x)|,|\Gamma(y)|\}\)
 \item[geospacial x-distance (xdist)] the distance of the nodes' geographical locations regarding longitude only
 \item[geospacial y-distance (ydist)] the distance of the nodes' geographical locations regarding latitude only
 \item[geospacial distance (dist)] the euclidean distance of the nodes' geographical locations
 \item[top-k shortest distance (short)] Introduced by \citeauthor{link_prediction_k_shortest}
       as a similarity function for link prediction,
-      this is the sum of the lengths of the first \(k\) shortest paths between the edge's nodes.~\cite{link_prediction_k_shortest}
+      this is the sum of the lengths of the first \(k\) shortest paths between the nodes.~\cite{link_prediction_k_shortest}
       The authors found that small values for \(k\) worked best in their datasets~\cite[see][4]{link_prediction_k_shortest},
       so we chose a value of \(k = 3\).
       We also chose to consider the lengths of the shortest paths separately,
@@ -300,8 +301,8 @@ to all non-existent connections of the training-network and evaluate the results
 For every function we computed the \emph{area under the ROC-curve} (AUROC) and the results are shown in \autoref{tab:similarity_auroc}.
 AUROC allows us to compare the performance of a function to random guessing~\cite[see][40]{informedness},
 as guessing randomly for each datapoint would result in a AUROC-score of 0.5.\\
-For the computation the AUROC-score assumes,
-that a higher similarity score corresponds to a higher probability, that the link should exist.
+While calculating the AUROC-score it is assumed
+that a higher similarity score corresponds to a higher probability of the link existing.
 For some similarity functions this is not true, and instead the AUROC of their
 negated output was computed, such that a lower similarity score leads to a higher link probability.
 This has been highlighted in the referenced table with a \enquote{\n{}} before the abbreviation of the function.
@@ -353,7 +354,7 @@ This has been highlighted in the referenced table with a \enquote{\n{}} before t
 
 The random forest classifiers have been trained on one complete dataset
 and are being evaluated on the dataset they have not trained on.
-A classifier trained on \enquote{tub20} and evaluated on \enquote{ufrank20} will be referenced as \enquote{tub20 on ufrank20}.
+A classifier trained on \enquote{tub20} and evaluated on \enquote{ufrank20} will be refered to as \enquote{tub20 on ufrank20}.
 We have trained classifiers with 50 decision trees and a maximum tree depth of 10 (these have the suffix \enquote{small}),
 and classifiers with 100 decision trees and a maximum depth of 50 (suffix \enquote{large}).
 The results for some common performance metrics for classifiers are shown in \autoref{tab:classifier_metrics}.
@@ -416,12 +417,13 @@ In general the standard deviation is relatively low (speaking for the representa
 and the similarity functions based on graph distance and on geospacial distance show the best performance.
 However it should be noted, that computing the geographical distance was less time intensive.
 Although not shown in the results above, calculating the function \enquote{short}
-took on average over 400 \(\times\) more time than any other function on our computing environment.\\
+took on average over 400 \(\times\) more time than any other function in our computing environment.\\
 Hence concerning datasets we used or datasets similar to these,
-geospacial distance can be considered an important similarity function to consider.
+geospacial distance can be considered as an important similarity function.
 
 While there are trends between different datasets and splits,
-they lie within the standard-deviation and since only the results of five experiments are being considered,
+they lie within the standard-deviation.
+Since only the results of five experiments are being considered,
 we will abstain from making any conclusions from these trends.
 
 \section{Conclusion}\label{sec:conclusion}
