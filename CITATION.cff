@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "Inferring road network structure using link prediction"
+message: "If this research is useful to you please cite this, and leave me a message if you want!"
+type: unpublished
+authors:
+  - given-names: "Ovidu Victor"
+    family-names: "Tătar"
+    email: "research@ovi-tatar.de"
+identifiers:
+  - type: url
+    value: "https://github.com/Impelon/road-network-link-prediction/releases/tag/v1.1"
+    description: "Original paper with minor revisions regarding wording."
+date-released: "2021-04-07"
