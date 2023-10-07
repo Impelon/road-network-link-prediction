@@ -12,8 +12,5 @@ preferred-citation:
     - given-names: "Ovidu Victor"
       family-names: "Tătar"
       email: "research@ovi-tatar.de"
-  identifiers:
-    - type: url
-      value: "https://github.com/Impelon/road-network-link-prediction/releases/tag/v1.1"
-      description: "Original paper with minor revisions regarding wording."
+  url: "https://github.com/Impelon/road-network-link-prediction/releases/tag/v1.1"
   date-released: "2021-04-07"
