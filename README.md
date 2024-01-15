@@ -44,4 +44,9 @@ The python scripts in the [code](code) folder provide a small usage header, plea
     ```
     python3 predict_links.py data-and-model-folder "Technische Universität Berlin, Berlin"
     ```
+5.  Evaluate link prediction similarity scores, including the trained classifiers:
+    ```
+    python3 evaluate_link_prediction.py data-and-model-folder
+    ```
 
+A trained classifer can also be used to predict roads on an entirely new graph using `classifier_predict_links.py`.
